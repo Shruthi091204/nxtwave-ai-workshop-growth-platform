@@ -38,7 +38,7 @@ export function RegistrationForm() {
     setIsSubmitting(false);
 
     if (result.success) {
-      supabase.from('events').insert([{ type: 'form_submit', meta: { email: formData.email } }]).catch(() => {});
+      supabase.from('events').insert([{ type: 'form_submit', meta: { email: formData.email } }]).then(({ error }) => { if (error) console.error(error); });
       // Store our own code to show on thank you page
       if (result.referralCode) {
         localStorage.setItem('my_referral_code', result.referralCode);
@@ -52,7 +52,7 @@ export function RegistrationForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (!hasStarted) {
       setHasStarted(true);
-      supabase.from('events').insert([{ type: 'form_start', meta: { field: e.target.name } }]).catch(() => {});
+      supabase.from('events').insert([{ type: 'form_start', meta: { field: e.target.name } }]).then(({ error }) => { if (error) console.error(error); });
     }
     setFormData(prev => ({
       ...prev,

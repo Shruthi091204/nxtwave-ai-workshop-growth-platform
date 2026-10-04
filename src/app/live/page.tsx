@@ -42,7 +42,7 @@ export default function LiveStudentPage() {
         setLiveState(payload.new as LiveState);
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'polls' }, (payload) => {
-        if (payload.new && payload.new.is_active) {
+        if (payload.new && (payload.new as any).is_active) {
           setPoll(payload.new);
           setHasVoted(false);
         } else {

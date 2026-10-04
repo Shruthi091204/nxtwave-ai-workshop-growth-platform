@@ -25,7 +25,7 @@ export default function ThankYouPage() {
   const shareMessage = `Hey! I'm joining the free 'Build Your First AI Project in 60 Minutes' live workshop by NxtWave. Join me here: ${shareUrl}`;
 
   const trackShare = (platform: string) => {
-    supabase.from('events').insert([{ type: 'share_click', meta: { platform, refCode } }]).catch(() => {});
+    supabase.from('events').insert([{ type: 'share_click', meta: { platform, refCode } }]).then(({ error }) => { if (error) console.error(error); });
   };
 
   const handleCopy = () => {

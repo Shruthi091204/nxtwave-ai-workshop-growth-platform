@@ -21,7 +21,7 @@ export function IdeaGenerator() {
     setError('');
     
     // Track usage
-    supabase.from('events').insert([{ type: 'ai_tool_used', meta: { tool: 'idea_generator', branch, interest } }]).catch(() => {});
+    supabase.from('events').insert([{ type: 'ai_tool_used', meta: { tool: 'idea_generator', branch, interest } }]).then(({ error }) => { if (error) console.error(error); });
 
     try {
       const res = await fetch('/api/ideas', {
